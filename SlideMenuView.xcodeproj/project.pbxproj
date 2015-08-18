@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		63A439DF1AE4AED0006B984A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A439DE1AE4AED0006B984A /* main.m */; };
 		63A439E21AE4AED0006B984A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A439E11AE4AED0006B984A /* AppDelegate.m */; };
-		63A439E51AE4AED0006B984A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A439E41AE4AED0006B984A /* ViewController.m */; };
 		63A439E81AE4AED0006B984A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63A439E61AE4AED0006B984A /* Main.storyboard */; };
 		63A439EA1AE4AED0006B984A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63A439E91AE4AED0006B984A /* Images.xcassets */; };
 		63A439ED1AE4AED0006B984A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63A439EB1AE4AED0006B984A /* LaunchScreen.xib */; };
@@ -37,8 +36,6 @@
 		63A439DE1AE4AED0006B984A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		63A439E01AE4AED0006B984A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		63A439E11AE4AED0006B984A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		63A439E31AE4AED0006B984A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		63A439E41AE4AED0006B984A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		63A439E71AE4AED0006B984A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		63A439E91AE4AED0006B984A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		63A439EC1AE4AED0006B984A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -96,20 +93,18 @@
 		63A439DB1AE4AED0006B984A /* SlideMenuView */ = {
 			isa = PBXGroup;
 			children = (
-				63CB67E11AE7853F00A5DE4E /* ThirdViewController.h */,
-				63CB67D61AE7851900A5DE4E /* FirstViewController.h */,
-				63CB67D71AE7851900A5DE4E /* FirstViewController.m */,
-				63CB67D81AE7851900A5DE4E /* MenuViewController.h */,
-				63CB67D91AE7851900A5DE4E /* MenuViewController.m */,
-				63CB67DA1AE7851900A5DE4E /* SecondViewController.h */,
-				63CB67DB1AE7851900A5DE4E /* SecondViewController.m */,
-				63CB67DC1AE7851900A5DE4E /* ThirdViewController.m */,
-				63A43A021AE4AF94006B984A /* SlideMenuView.h */,
-				63A43A031AE4AF94006B984A /* SlideMenuView.m */,
 				63A439E01AE4AED0006B984A /* AppDelegate.h */,
 				63A439E11AE4AED0006B984A /* AppDelegate.m */,
-				63A439E31AE4AED0006B984A /* ViewController.h */,
-				63A439E41AE4AED0006B984A /* ViewController.m */,
+				63A43A021AE4AF94006B984A /* SlideMenuView.h */,
+				63A43A031AE4AF94006B984A /* SlideMenuView.m */,
+				63CB67D81AE7851900A5DE4E /* MenuViewController.h */,
+				63CB67D91AE7851900A5DE4E /* MenuViewController.m */,
+				63CB67D61AE7851900A5DE4E /* FirstViewController.h */,
+				63CB67D71AE7851900A5DE4E /* FirstViewController.m */,
+				63CB67DA1AE7851900A5DE4E /* SecondViewController.h */,
+				63CB67DB1AE7851900A5DE4E /* SecondViewController.m */,
+				63CB67E11AE7853F00A5DE4E /* ThirdViewController.h */,
+				63CB67DC1AE7851900A5DE4E /* ThirdViewController.m */,
 				63A439E61AE4AED0006B984A /* Main.storyboard */,
 				63A439E91AE4AED0006B984A /* Images.xcassets */,
 				63A439EB1AE4AED0006B984A /* LaunchScreen.xib */,
@@ -244,7 +239,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63A439E51AE4AED0006B984A /* ViewController.m in Sources */,
 				63CB67DE1AE7851900A5DE4E /* MenuViewController.m in Sources */,
 				63CB67E01AE7851900A5DE4E /* ThirdViewController.m in Sources */,
 				63A439E21AE4AED0006B984A /* AppDelegate.m in Sources */,
