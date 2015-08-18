@@ -9,21 +9,23 @@
 #import "ThirdViewController.h"
 
 @interface ThirdViewController ()
+
 @end
 
 @implementation ThirdViewController
-- (void)viewDidLoad {
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    [self initView];
-}
-
-- (void)initView {
+    
     self.navigationItem.title = @"Third";
-    self.navigationController.view.backgroundColor = [UIColor whiteColor];
+    self.navigationController.view.backgroundColor = [UIColor yellowColor];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
 }
 
 @end
+

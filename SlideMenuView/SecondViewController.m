@@ -13,18 +13,19 @@
 @end
 
 @implementation SecondViewController
-- (void)viewDidLoad {
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    [self initView];
-}
-
-- (void)initView {
+    
     self.navigationItem.title = @"Second";
-    self.navigationController.view.backgroundColor = [UIColor whiteColor];
+    self.navigationController.view.backgroundColor = [UIColor greenColor];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
 }
 
 @end
+

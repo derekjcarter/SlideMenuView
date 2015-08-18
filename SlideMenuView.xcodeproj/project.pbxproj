@@ -95,19 +95,9 @@
 			children = (
 				63A439E01AE4AED0006B984A /* AppDelegate.h */,
 				63A439E11AE4AED0006B984A /* AppDelegate.m */,
-				63A43A021AE4AF94006B984A /* SlideMenuView.h */,
-				63A43A031AE4AF94006B984A /* SlideMenuView.m */,
-				63CB67D81AE7851900A5DE4E /* MenuViewController.h */,
-				63CB67D91AE7851900A5DE4E /* MenuViewController.m */,
-				63CB67D61AE7851900A5DE4E /* FirstViewController.h */,
-				63CB67D71AE7851900A5DE4E /* FirstViewController.m */,
-				63CB67DA1AE7851900A5DE4E /* SecondViewController.h */,
-				63CB67DB1AE7851900A5DE4E /* SecondViewController.m */,
-				63CB67E11AE7853F00A5DE4E /* ThirdViewController.h */,
-				63CB67DC1AE7851900A5DE4E /* ThirdViewController.m */,
-				63A439E61AE4AED0006B984A /* Main.storyboard */,
-				63A439E91AE4AED0006B984A /* Images.xcassets */,
-				63A439EB1AE4AED0006B984A /* LaunchScreen.xib */,
+				B6FFF43E1B83800D003166A5 /* Menu */,
+				B6FFF43D1B838000003166A5 /* ViewControllers */,
+				B6FFF43F1B83807C003166A5 /* Storyboards */,
 				63A439DC1AE4AED0006B984A /* Supporting Files */,
 			);
 			path = SlideMenuView;
@@ -116,6 +106,7 @@
 		63A439DC1AE4AED0006B984A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				63A439E91AE4AED0006B984A /* Images.xcassets */,
 				63A439DD1AE4AED0006B984A /* Info.plist */,
 				63A439DE1AE4AED0006B984A /* main.m */,
 			);
@@ -137,6 +128,39 @@
 				63A439F71AE4AED0006B984A /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B6FFF43D1B838000003166A5 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				63CB67D61AE7851900A5DE4E /* FirstViewController.h */,
+				63CB67D71AE7851900A5DE4E /* FirstViewController.m */,
+				63CB67DA1AE7851900A5DE4E /* SecondViewController.h */,
+				63CB67DB1AE7851900A5DE4E /* SecondViewController.m */,
+				63CB67E11AE7853F00A5DE4E /* ThirdViewController.h */,
+				63CB67DC1AE7851900A5DE4E /* ThirdViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		B6FFF43E1B83800D003166A5 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				63A43A021AE4AF94006B984A /* SlideMenuView.h */,
+				63A43A031AE4AF94006B984A /* SlideMenuView.m */,
+				63CB67D81AE7851900A5DE4E /* MenuViewController.h */,
+				63CB67D91AE7851900A5DE4E /* MenuViewController.m */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
+		B6FFF43F1B83807C003166A5 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				63A439E61AE4AED0006B984A /* Main.storyboard */,
+				63A439EB1AE4AED0006B984A /* LaunchScreen.xib */,
+			);
+			name = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

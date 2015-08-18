@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface SlideMenuView : UIViewController
+
 @property(nonatomic, strong) UIViewController *leftViewController;
 @property(nonatomic, strong) UIViewController *rootViewController;
 @property(nonatomic, strong) UIImageView *backgroundImageView;
+
 - (id)initWithRootController:(UIViewController *)rootViewController;
+
 @end
