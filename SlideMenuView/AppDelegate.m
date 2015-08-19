@@ -1,9 +1,8 @@
 //
 //  AppDelegate.m
-//  SlideMenuView
+//  SlideMenu
 //
-//  Created by xdf on 4/20/15.
-//  Copyright (c) 2015 xdf. All rights reserved.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -27,11 +26,11 @@
     
     // Set SlideMenu as NavigationController
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:initialViewController];
-    SlideMenuView *slideMenu = [[SlideMenuView alloc] initWithRootController:nav];
-    slideMenu.leftViewController = menuViewController;
+    SlideMenuContainerView *slideMenuContainer = [[SlideMenuContainerView alloc] initWithRootController:nav];
+    slideMenuContainer.menuViewController = menuViewController;
     
-    self.window.rootViewController = slideMenu;
-    self.slideMenu = slideMenu;
+    self.window.rootViewController = slideMenuContainer;
+    self.slideMenuContainerView = slideMenuContainer;
     
     return YES;
 }

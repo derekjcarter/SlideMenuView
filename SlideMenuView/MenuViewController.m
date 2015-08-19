@@ -1,9 +1,8 @@
 //
 //  MenuViewController.m
-//  SlideMenuView
+//  SlideMenu
 //
-//  Created by xdf on 4/20/15.
-//  Copyright (c) 2015 xdf. All rights reserved.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "MenuViewController.h"
@@ -35,13 +34,90 @@ static NSInteger kBottomPadding = 20;
 
 @implementation MenuViewController
 
-- (void)viewDidLoad
+- (void)viewDidLoad_WITH_AUTO_LAYOUT_NOT_USED
 {
     [super viewDidLoad];
     self.titles = @[@"Messages", @"Channels", @"Teams", @"Users", @"Announcements"];
     
     // Setup view details
     self.view.backgroundColor = [UIColor clearColor];
+    self.navigationController.navigationBarHidden = YES;
+    
+    // Setup top logo
+    self.logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo"]];
+    self.logoImage.translatesAutoresizingMaskIntoConstraints = NO;
+    self.logoImage.backgroundColor = [UIColor clearColor];
+    self.logoImage.contentMode = UIViewContentModeScaleAspectFit;
+    self.logoImage.layer.masksToBounds = YES;
+    [self.view addSubview:self.logoImage];
+    
+    // Setup tableview
+    CGFloat tableViewWidth = self.view.bounds.size.width - (self.view.bounds.size.width / 6);
+    self.tableview = [[UITableView alloc] initWithFrame:CGRectNull style:UITableViewStylePlain];
+    self.tableview.translatesAutoresizingMaskIntoConstraints = NO;
+    self.tableview.delegate = self;
+    self.tableview.dataSource = self;
+    self.tableview.backgroundColor = [UIColor clearColor];
+    self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.tableview selectRowAtIndexPath:[NSIndexPath indexPathForItem:self.selectedIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+    [self.view addSubview:self.tableview];
+    
+    // Setup footer
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-kFooterHeight-kBottomPadding, tableViewWidth, kFooterHeight)];
+    footerView.translatesAutoresizingMaskIntoConstraints = NO;
+    footerView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:footerView];
+    
+    // Setup logout button in footer
+    self.logoutButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, kFooterHeight)];
+    self.logoutButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.logoutButton setTitleColor:[UIColor whiteColor]forState:UIControlStateNormal];
+    [self.logoutButton setAlpha: .6];
+    self.logoutButton.backgroundColor = [UIColor clearColor];
+    [self.logoutButton setTitle:@"Logout" forState:UIControlStateNormal];
+    [footerView addSubview: self.logoutButton];
+    
+    // Setup settings button in footer
+    // ... Not yet added...
+    
+    
+    // Constraint views
+    NSDictionary* views = NSDictionaryOfVariableBindings(_logoImage, _tableview, footerView, _logoutButton);
+    NSDictionary* metrics = @{
+                              @"topPadding" : @(kTopPadding),
+                              @"logoImageWidth" : @(kLogoViewWidth),
+                              @"logoImageHeight" : @(kLogoViewHeight),
+                              @"tableViewWidth" : @(tableViewWidth),
+                              @"footerViewWidth" : @(80),
+                              @"footerViewHeight" : @(kFooterHeight),
+                              @"bottomPadding" : @(kBottomPadding),
+                              
+                              };
+    
+    // Horizontal constraints
+    [footerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_logoutButton]-|" options:0 metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_logoImage(==logoImageWidth)]" options:0 metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_tableview(==tableViewWidth)]" options:0 metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[footerView(==footerViewWidth)]" options:0 metrics:metrics views:views]];
+    
+    // Vertical constraints
+    [footerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[_logoutButton]-|" options:0 metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topPadding-[_logoImage(==logoImageHeight)]-[_tableview]-[footerView(==footerViewHeight)]|" options:0 metrics:metrics views:views]];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.titles = @[@"Messages", @"Channels", @"Teams", @"Users", @"Announcements"];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(orientationChanged:)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
+    
+    // Setup view details
+    self.view.backgroundColor = [UIColor clearColor];
+    self.navigationController.navigationBarHidden = YES;
     
     // Setup top logo
     self.logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo"]];
@@ -53,7 +129,6 @@ static NSInteger kBottomPadding = 20;
     
     // Setup tableview
     CGFloat tableViewWidth = self.view.bounds.size.width - (self.view.bounds.size.width / 6);
-    
     self.tableview = [[UITableView alloc]initWithFrame:CGRectMake(0,
                                                                   kTopPadding + self.logoImage.frame.size.height,
                                                                   tableViewWidth,
@@ -63,32 +138,46 @@ static NSInteger kBottomPadding = 20;
     self.tableview.dataSource = self;
     self.tableview.backgroundColor = [UIColor clearColor];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
     [self.tableview selectRowAtIndexPath:[NSIndexPath indexPathForItem:self.selectedIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
-    
     [self.view addSubview:self.tableview];
     
     // Setup footer
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-kFooterHeight-kBottomPadding, tableViewWidth, kFooterHeight)];
-//    footerView.backgroundColor = [UIColor yellowColor];
+    //footerView.backgroundColor = [UIColor yellowColor];
     [self.view addSubview:footerView];
     
     // Setup logout button in footer
     self.logoutButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, kFooterHeight)];
     [self.logoutButton setTitleColor:[UIColor whiteColor]forState:UIControlStateNormal];
     [self.logoutButton setAlpha: .6];
-//    self.logoutButton.backgroundColor = [UIColor redColor];
+    //self.logoutButton.backgroundColor = [UIColor redColor];
     [self.logoutButton setTitle:@"Logout" forState:UIControlStateNormal];
     [footerView addSubview: self.logoutButton];
     
     // Setup settings button in footer
-    
     
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+- (void)orientationChanged:(NSNotification *)notification
+{
+    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+    if (UIDeviceOrientationIsLandscape(deviceOrientation)) {
+        NSLog(@"MENU | LANDSCAPE: %@", NSStringFromCGRect(self.view.frame));
+        
+    } else if (UIDeviceOrientationIsPortrait(deviceOrientation)) {
+        NSLog(@"MENU | PORTRAIT: %@", NSStringFromCGRect(self.view.frame));
+        
+    }
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:UIDeviceOrientationDidChangeNotification];
 }
 
 
@@ -161,7 +250,7 @@ static NSInteger kBottomPadding = 20;
     AppDelegate *app = [UIApplication sharedApplication].delegate;
     self.mainSide = [[FirstViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: self.mainSide];
-    app.slideMenu.rootViewController = nav;
+    app.slideMenuContainerView.rootViewController = nav;
 }
 
 - (void)launchSecondView
@@ -169,7 +258,7 @@ static NSInteger kBottomPadding = 20;
     AppDelegate *app = [UIApplication sharedApplication].delegate;
     SecondViewController *mainSide = [[SecondViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: mainSide];
-    app.slideMenu.rootViewController = nav;
+    app.slideMenuContainerView.rootViewController = nav;
 }
 
 - (void)launchThirdView
@@ -177,7 +266,7 @@ static NSInteger kBottomPadding = 20;
     AppDelegate *app = [UIApplication sharedApplication].delegate;
     ThirdViewController *mainSide = [[ThirdViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: mainSide];
-    app.slideMenu.rootViewController = nav;
+    app.slideMenuContainerView.rootViewController = nav;
 }
 
 - (void)launchFourthView
@@ -185,7 +274,7 @@ static NSInteger kBottomPadding = 20;
     AppDelegate *app = [UIApplication sharedApplication].delegate;
     FourthViewController *mainSide = [[FourthViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: mainSide];
-    app.slideMenu.rootViewController = nav;
+    app.slideMenuContainerView.rootViewController = nav;
 }
 
 - (void)launchFifthView
@@ -193,7 +282,7 @@ static NSInteger kBottomPadding = 20;
     AppDelegate *app = [UIApplication sharedApplication].delegate;
     FifthViewController *mainSide = [[FifthViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: mainSide];
-    app.slideMenu.rootViewController = nav;
+    app.slideMenuContainerView.rootViewController = nav;
 }
 
 

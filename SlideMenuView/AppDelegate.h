@@ -1,17 +1,16 @@
 //
 //  AppDelegate.h
-//  SlideMenuView
+//  SlideMenu
 //
-//  Created by xdf on 4/20/15.
-//  Copyright (c) 2015 xdf. All rights reserved.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "SlideMenuView.h"
+#import "SlideMenuContainerView.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
-@property(nonatomic, strong) SlideMenuView *slideMenu;
+@property(nonatomic, strong) UIWindow *window;
+@property(nonatomic, strong) SlideMenuContainerView *slideMenuContainerView;
 
 @end

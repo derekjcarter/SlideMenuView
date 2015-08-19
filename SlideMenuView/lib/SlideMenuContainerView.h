@@ -1,16 +1,15 @@
 //
-//  SlideMenuView.h
-//  SlideMenuView
+//  SlideMenuContainerView.h
+//  SlideMenu
 //
-//  Created by xdf on 4/20/15.
-//  Copyright (c) 2015 xdf. All rights reserved.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface SlideMenuView : UIViewController
+@interface SlideMenuContainerView : UIViewController
 
-@property(nonatomic, strong) UIViewController *leftViewController;
+@property(nonatomic, strong) UIViewController *menuViewController;
 @property(nonatomic, strong) UIViewController *rootViewController;
 @property(nonatomic, strong) UIImageView *backgroundImageView;
 
