@@ -18,6 +18,9 @@
 		63CB67DE1AE7851900A5DE4E /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB67D91AE7851900A5DE4E /* MenuViewController.m */; };
 		63CB67DF1AE7851900A5DE4E /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB67DB1AE7851900A5DE4E /* SecondViewController.m */; };
 		63CB67E01AE7851900A5DE4E /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB67DC1AE7851900A5DE4E /* ThirdViewController.m */; };
+		B6FC53BC1B83D60000773752 /* AnimatedStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC53BB1B83D60000773752 /* AnimatedStatusBar.m */; };
+		B6FFF4421B83CB96003166A5 /* FourthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FFF4411B83CB96003166A5 /* FourthViewController.m */; };
+		B6FFF4451B83CB9E003166A5 /* FifthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FFF4441B83CB9E003166A5 /* FifthViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +55,12 @@
 		63CB67DB1AE7851900A5DE4E /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		63CB67DC1AE7851900A5DE4E /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
 		63CB67E11AE7853F00A5DE4E /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
+		B6FC53BA1B83D60000773752 /* AnimatedStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedStatusBar.h; sourceTree = "<group>"; };
+		B6FC53BB1B83D60000773752 /* AnimatedStatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedStatusBar.m; sourceTree = "<group>"; };
+		B6FFF4401B83CB96003166A5 /* FourthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourthViewController.h; sourceTree = "<group>"; };
+		B6FFF4411B83CB96003166A5 /* FourthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FourthViewController.m; sourceTree = "<group>"; };
+		B6FFF4431B83CB9E003166A5 /* FifthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FifthViewController.h; sourceTree = "<group>"; };
+		B6FFF4441B83CB9E003166A5 /* FifthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FifthViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +104,8 @@
 			children = (
 				63A439E01AE4AED0006B984A /* AppDelegate.h */,
 				63A439E11AE4AED0006B984A /* AppDelegate.m */,
+				B6FC53BA1B83D60000773752 /* AnimatedStatusBar.h */,
+				B6FC53BB1B83D60000773752 /* AnimatedStatusBar.m */,
 				B6FFF43E1B83800D003166A5 /* Menu */,
 				B6FFF43D1B838000003166A5 /* ViewControllers */,
 				B6FFF43F1B83807C003166A5 /* Storyboards */,
@@ -139,6 +150,10 @@
 				63CB67DB1AE7851900A5DE4E /* SecondViewController.m */,
 				63CB67E11AE7853F00A5DE4E /* ThirdViewController.h */,
 				63CB67DC1AE7851900A5DE4E /* ThirdViewController.m */,
+				B6FFF4401B83CB96003166A5 /* FourthViewController.h */,
+				B6FFF4411B83CB96003166A5 /* FourthViewController.m */,
+				B6FFF4431B83CB9E003166A5 /* FifthViewController.h */,
+				B6FFF4441B83CB9E003166A5 /* FifthViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -263,6 +278,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6FFF4451B83CB9E003166A5 /* FifthViewController.m in Sources */,
+				B6FFF4421B83CB96003166A5 /* FourthViewController.m in Sources */,
+				B6FC53BC1B83D60000773752 /* AnimatedStatusBar.m in Sources */,
 				63CB67DE1AE7851900A5DE4E /* MenuViewController.m in Sources */,
 				63CB67E01AE7851900A5DE4E /* ThirdViewController.m in Sources */,
 				63A439E21AE4AED0006B984A /* AppDelegate.m in Sources */,

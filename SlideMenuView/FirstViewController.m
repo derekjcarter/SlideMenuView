@@ -18,8 +18,8 @@
 {
     [super viewDidLoad];
 
-    self.navigationItem.title = @"First";
-    self.navigationController.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.title = @"Messages";
+    self.navigationController.view.backgroundColor = [UIColor lightGrayColor];
 }
 
 - (void)didReceiveMemoryWarning

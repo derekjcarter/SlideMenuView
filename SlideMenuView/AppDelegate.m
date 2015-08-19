@@ -18,13 +18,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    FirstViewController *initialViewController = [[FirstViewController alloc] init];
-    
+    // Setup menu view controller
     MenuViewController *menuViewController = [[MenuViewController alloc] init];
     menuViewController.selectedIndex = 0;
     
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:initialViewController];
+    // Setup initial view controller
+    FirstViewController *initialViewController = [[FirstViewController alloc] init];
     
+    // Set SlideMenu as NavigationController
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:initialViewController];
     SlideMenuView *slideMenu = [[SlideMenuView alloc] initWithRootController:nav];
     slideMenu.leftViewController = menuViewController;
     

@@ -18,8 +18,8 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"Second";
-    self.navigationController.view.backgroundColor = [UIColor greenColor];
+    self.navigationItem.title = @"Channels";
+    self.navigationController.view.backgroundColor = [UIColor redColor];
 }
 
 - (void)didReceiveMemoryWarning

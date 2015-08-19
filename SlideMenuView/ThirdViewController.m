@@ -18,8 +18,8 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"Third";
-    self.navigationController.view.backgroundColor = [UIColor yellowColor];
+    self.navigationItem.title = @"Teams";
+    self.navigationController.view.backgroundColor = [UIColor greenColor];
 }
 
 - (void)didReceiveMemoryWarning

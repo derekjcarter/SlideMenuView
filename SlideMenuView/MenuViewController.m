@@ -6,11 +6,14 @@
 //  Copyright (c) 2015 xdf. All rights reserved.
 //
 
+#import "MenuViewController.h"
 #import "AppDelegate.h"
 #import "FirstViewController.h"
 #import "SecondViewController.h"
 #import "ThirdViewController.h"
-#import "MenuViewController.h"
+#import "FourthViewController.h"
+#import "FifthViewController.h"
+
 
 static NSInteger kTopPadding = 20;
 static NSInteger kLogoViewWidth = 60;
@@ -35,10 +38,10 @@ static NSInteger kBottomPadding = 20;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.titles = @[@"Messages", @"Channels", @"Users"];
+    self.titles = @[@"Messages", @"Channels", @"Teams", @"Users", @"Announcements"];
     
     // Setup view details
-    self.view.backgroundColor = [UIColor redColor];
+    self.view.backgroundColor = [UIColor clearColor];
     
     // Setup top logo
     self.logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo"]];
@@ -139,6 +142,12 @@ static NSInteger kBottomPadding = 20;
         case 2:
             [self launchThirdView];
             break;
+        case 3:
+            [self launchFourthView];
+            break;
+        case 4:
+            [self launchFifthView];
+            break;
         default:
             break;
     }
@@ -150,11 +159,8 @@ static NSInteger kBottomPadding = 20;
 - (void)launchFirstView
 {
     AppDelegate *app = [UIApplication sharedApplication].delegate;
-    if (!self.mainSide) {
-        FirstViewController *mainSide = [[FirstViewController alloc] init];
-        self.mainSide = mainSide;
-    }
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: _mainSide];
+    self.mainSide = [[FirstViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: self.mainSide];
     app.slideMenu.rootViewController = nav;
 }
 
@@ -170,6 +176,22 @@ static NSInteger kBottomPadding = 20;
 {
     AppDelegate *app = [UIApplication sharedApplication].delegate;
     ThirdViewController *mainSide = [[ThirdViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: mainSide];
+    app.slideMenu.rootViewController = nav;
+}
+
+- (void)launchFourthView
+{
+    AppDelegate *app = [UIApplication sharedApplication].delegate;
+    FourthViewController *mainSide = [[FourthViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: mainSide];
+    app.slideMenu.rootViewController = nav;
+}
+
+- (void)launchFifthView
+{
+    AppDelegate *app = [UIApplication sharedApplication].delegate;
+    FifthViewController *mainSide = [[FifthViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: mainSide];
     app.slideMenu.rootViewController = nav;
 }

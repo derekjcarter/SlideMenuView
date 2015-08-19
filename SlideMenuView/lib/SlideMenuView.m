@@ -7,6 +7,8 @@
 //
 
 #import "SlideMenuView.h"
+#import "AnimatedStatusBar.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface SlideMenuView ()
 
@@ -16,6 +18,7 @@
 @property(nonatomic, assign) CGFloat visibleWidthLeft;
 @property(nonatomic, assign) CGPoint startPoint;
 @property(nonatomic, assign) BOOL isAnimated;
+@property(nonatomic, assign) BOOL showMenuOffset;
 
 @end
 
@@ -33,6 +36,7 @@
 
 - (id)init
 {
+    self.showMenuOffset = YES;
     self.visibleWidthLeft = self.view.bounds.size.width / 6;
     self = [super init];
     if (self) {
@@ -52,6 +56,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [AnimatedStatusBar initialize];
 }
 
 - (void)didReceiveMemoryWarning
@@ -119,13 +125,14 @@
     [self.view insertSubview:view atIndex:1];
     
     CGRect rect = self.leftViewController.view.frame;
-    //rect.origin.x = -self.visibleWidthLeft;
-rect.origin.x = 0;
+    if (self.showMenuOffset) {
+        rect.origin.x = -self.visibleWidthLeft;
+    } else {
+        rect.origin.x = 0;
+    }
     rect.origin.y = self.view.bounds.size.height / 4;
     rect.size.height = self.view.bounds.size.height / 2;
     rect.size.width = self.view.bounds.size.width / 2;
-    
-    NSLog(@"rect: %@", NSStringFromCGRect(rect));
     
     self.leftViewController.view.transform = CGAffineTransformMakeScale(0.5, 0.5);
     self.leftViewController.view.frame = rect;
@@ -168,12 +175,12 @@ rect.origin.x = 0;
         NSLog(@"menu rect: %@", NSStringFromCGRect(nextRect));
         
         [UIView animateWithDuration:.5 animations:^{
-//            self.rootViewController.view.frame = rect;
-//            self.leftViewController.view.frame = nextRect;
+            //            self.rootViewController.view.frame = rect;
+            //            self.leftViewController.view.frame = nextRect;
         } completion:^(BOOL finished) {
             
         }];
-
+        
         
     } else {
         
@@ -195,10 +202,10 @@ rect.origin.x = 0;
         NSLog(@"menu rect: %@", NSStringFromCGRect(nextRect));
         
         [UIView animateWithDuration:.5 animations:^{
-//            self.rootViewController.view.frame = rect;
-//            self.leftViewController.view.frame = nextRect;
+            //            self.rootViewController.view.frame = rect;
+            //            self.leftViewController.view.frame = nextRect;
         } completion:^(BOOL finished) {
-
+            
         }];
         
     }
@@ -209,22 +216,29 @@ rect.origin.x = 0;
 
 - (void)handleleftSide:(UIPanGestureRecognizer *)leftSide
 {
-    NSLog(@"handleleftSide");
-    
     CGPoint locationPoint = [leftSide locationInView:self.view];
     CGFloat offsetX = - (locationPoint.x - self.startPoint.x);
     if (leftSide.state == UIGestureRecognizerStateChanged) {
         
         if (locationPoint.x - self.startPoint.x <= -6) {
-            //CGFloat leftOffsetX = offsetX * self.visibleWidthLeft / (self.view.bounds.size.width - self.visibleWidthLeft);
-CGFloat leftOffsetX = offsetX / (self.view.bounds.size.width);
-            CGFloat rootZoom = (offsetX / (self.view.bounds.size.width - self.visibleWidthLeft)) * 0.5;
-//CGFloat rootZoom = offsetX / (self.view.bounds.size.width) * 0.5;
+            CGFloat leftOffsetX;
+            CGFloat rootZoom;
+            if (self.showMenuOffset) {
+                leftOffsetX = offsetX * self.visibleWidthLeft / (self.view.bounds.size.width - self.visibleWidthLeft);
+                rootZoom = (offsetX / (self.view.bounds.size.width - self.visibleWidthLeft)) * 0.5;
+            } else {
+                leftOffsetX = offsetX / (self.view.bounds.size.width);
+                rootZoom = offsetX / (self.view.bounds.size.width) * 0.5;
+            }
             CGRect rootRect = self.rootViewController.view.frame;
-            rootRect.origin.x = [UIScreen mainScreen].bounds.size.width - self.visibleWidthLeft - offsetX;
-//rootRect.origin.x = [UIScreen mainScreen].bounds.size.width - offsetX;
+            if (self.showMenuOffset) {
+                rootRect.origin.x = [UIScreen mainScreen].bounds.size.width - self.visibleWidthLeft - offsetX;
+            } else {
+                rootRect.origin.x = [UIScreen mainScreen].bounds.size.width - offsetX;
+            }
             self.rootViewController.view.frame = rootRect;
             self.rootViewController.view.transform = CGAffineTransformMakeScale(0.5 + rootZoom, 0.5 +rootZoom);
+            
             CGRect leftRect = self.leftViewController.view.frame;
             leftRect.origin.x = -leftOffsetX;
             self.leftViewController.view.frame = leftRect;
@@ -248,8 +262,11 @@ CGFloat leftOffsetX = offsetX / (self.view.bounds.size.width);
             rect.size.width =  self.view.bounds.size.width;
             
             CGRect nextRect = self.leftViewController.view.frame;
-            //nextRect.origin.x = -self.visibleWidthLeft;
-nextRect.origin.x = 0;
+            if (self.showMenuOffset) {
+                nextRect.origin.x = -self.visibleWidthLeft;
+            } else {
+                nextRect.origin.x = 0;
+            }
             nextRect.origin.y = self.view.bounds.size.height / 4;
             nextRect.size.height = self.view.bounds.size.height / 2;
             nextRect.size.width = self.view.bounds.size.width / 2;
@@ -309,21 +326,31 @@ nextRect.origin.x = 0;
 {
     CGPoint locationPoint = [pan locationInView:self.view];
     CGFloat offsetX = locationPoint.x - self.startPoint.x;
+    
     if (pan.state == UIGestureRecognizerStateChanged) {
         
         if (locationPoint.x - self.startPoint.x >= 6) {
-            //CGFloat leftOffsetX = offsetX * self.visibleWidthLeft / (self.view.bounds.size.width - self.visibleWidthLeft);
-CGFloat leftOffsetX = offsetX / (self.view.bounds.size.width);
-            //CGFloat rootZoom = offsetX/(self.view.bounds.size.width - self.visibleWidthLeft) * 0.5;
-CGFloat rootZoom = offsetX/(self.view.bounds.size.width) * 0.5;
+            CGFloat leftOffsetX;
+            CGFloat rootZoom;
+            if (self.showMenuOffset) {
+                leftOffsetX = offsetX * self.visibleWidthLeft / (self.view.bounds.size.width - self.visibleWidthLeft);
+                rootZoom = offsetX / (self.view.bounds.size.width - self.visibleWidthLeft) * 0.5;
+            } else {
+                leftOffsetX = offsetX / (self.view.bounds.size.width);
+                rootZoom = offsetX / (self.view.bounds.size.width) * 0.5;
+            }
             CGRect rootRect = self.rootViewController.view.frame;
             rootRect.origin.x = offsetX;
             self.rootViewController.view.frame = rootRect;
             self.rootViewController.view.transform = CGAffineTransformMakeScale(1 - rootZoom, 1 - rootZoom);
+            
             CGRect leftRect = self.leftViewController.view.frame;
-            //leftRect.origin.x = leftOffsetX - self.visibleWidthLeft;
-leftRect.origin.x = leftOffsetX;
-            leftRect.size.width = self.view.bounds.size.width / 2 + leftOffsetX * self.view.bounds.size.width / 2 / self.visibleWidthLeft;
+            if (self.showMenuOffset) {
+                leftRect.origin.x = leftOffsetX - self.visibleWidthLeft;
+            } else {
+                leftRect.origin.x = leftOffsetX;
+            }
+            leftRect.size.width = (self.view.bounds.size.width / 2) + leftOffsetX * self.view.bounds.size.width / 2 / self.visibleWidthLeft;
             self.leftViewController.view.frame = leftRect;
             self.leftViewController.view.transform = CGAffineTransformMakeScale(0.5 + rootZoom , 0.5 + rootZoom);
             self.leftViewController.view.alpha = offsetX/(self.view.bounds.size.width - self.visibleWidthLeft) * 1.0;
@@ -373,8 +400,11 @@ leftRect.origin.x = leftOffsetX;
             rect.size.width = self.view.bounds.size.width;
             
             CGRect nextRect = self.leftViewController.view.frame;
-            //nextRect.origin.x = -self.visibleWidthLeft;
-nextRect.origin.x = 0;
+            if (self.showMenuOffset) {
+                nextRect.origin.x = -self.visibleWidthLeft;
+            } else {
+                nextRect.origin.x = 0;
+            }
             nextRect.origin.y = self.view.bounds.size.height / 4;
             nextRect.size.height = self.view.bounds.size.height / 2;
             nextRect.size.width = self.view.bounds.size.width / 2;
@@ -410,15 +440,15 @@ nextRect.origin.x = 0;
         nextRect.size.height = self.view.bounds.size.height;
         nextRect.size.width = self.view.bounds.size.width;
         
-        NSLog(@"!self.isAnimated = rect: %@", NSStringFromCGRect(rect));
-        NSLog(@"nextRect: %@", NSStringFromCGRect(nextRect));
-        
         [UIView animateWithDuration:.5 animations:^{
             self.rootViewController.view.transform = CGAffineTransformMakeScale(0.5, 0.5);
             self.rootViewController.view.frame = rect;
             self.leftViewController.view.transform = CGAffineTransformMakeScale(1, 1);
             self.leftViewController.view.frame = nextRect;
             self.leftViewController.view.alpha = 1.0;
+            
+//            [AnimatedStatusBar hide];
+            
         } completion:^(BOOL finished) {
             self.isAnimated = !self.isAnimated;
             self.leftSide.enabled = YES;
@@ -435,14 +465,14 @@ nextRect.origin.x = 0;
         rect.size.width = self.view.bounds.size.width;
         
         CGRect nextRect = self.leftViewController.view.frame;
-        //nextRect.origin.x = -self.visibleWidthLeft;
-nextRect.origin.x = 0;
+        if (self.showMenuOffset) {
+            nextRect.origin.x = -self.visibleWidthLeft;
+        } else {
+            nextRect.origin.x = 0;
+        }
         nextRect.origin.y = self.view.bounds.size.height / 4;
         nextRect.size.height = self.view.bounds.size.height / 2;
         nextRect.size.width = self.view.bounds.size.width / 2;
-        
-        NSLog(@"self.isAnimated = rect: %@", NSStringFromCGRect(rect));
-        NSLog(@"nextRect: %@", NSStringFromCGRect(nextRect));
         
         [UIView animateWithDuration:.5 animations:^{
             self.rootViewController.view.transform = CGAffineTransformMakeScale(1, 1);
@@ -456,7 +486,12 @@ nextRect.origin.x = 0;
             self.leftSide.enabled = NO;
             self.tap.enabled = NO;
             [self rootIsScrolling:YES];
+            
+//            [AnimatedStatusBar show]; //https://github.com/DWilliames/AnimatedStatusBar
+
         }];
+        
+        
         
     }
 }
@@ -478,7 +513,5 @@ nextRect.origin.x = 0;
     }
     return YES;
 }
-
-
 
 @end
