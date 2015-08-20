@@ -5,7 +5,7 @@
 //  Copyright (c) 2015. All rights reserved.
 //
 
-#import "MenuViewController.h"
+#import "SlideMenuViewController.h"
 #import "AppDelegate.h"
 #import "FirstViewController.h"
 #import "SecondViewController.h"
@@ -21,7 +21,7 @@ static NSInteger kFooterHeight = 40;
 static NSInteger kBottomPadding = 20;
 
 
-@interface MenuViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface SlideMenuViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property(strong,nonatomic) UITableView *tableview;
 @property(strong,nonatomic) UIView *footerView;
@@ -33,7 +33,7 @@ static NSInteger kBottomPadding = 20;
 @end
 
 
-@implementation MenuViewController
+@implementation SlideMenuViewController
 
 - (void)viewDidLoad_WITH_AUTO_LAYOUT
 {

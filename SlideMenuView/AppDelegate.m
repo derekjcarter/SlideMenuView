@@ -7,7 +7,7 @@
 
 #import "AppDelegate.h"
 #import "FirstViewController.h"
-#import "MenuViewController.h"
+#import "SlideMenuViewController.h"
 
 @interface AppDelegate ()
 
@@ -18,8 +18,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Setup menu view controller
-    MenuViewController *menuViewController = [[MenuViewController alloc] init];
-    menuViewController.selectedIndex = 0;
+    SlideMenuViewController *slideMenuViewController = [[SlideMenuViewController alloc] init];
+    slideMenuViewController.selectedIndex = 0;
     
     // Setup initial view controller
     FirstViewController *initialViewController = [[FirstViewController alloc] init];
@@ -27,7 +27,7 @@
     // Set SlideMenu as NavigationController
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:initialViewController];
     SlideMenuContainerView *slideMenuContainer = [[SlideMenuContainerView alloc] initWithRootController:nav];
-    slideMenuContainer.menuViewController = menuViewController;
+    slideMenuContainer.menuViewController = slideMenuViewController;
     
     self.window.rootViewController = slideMenuContainer;
     self.slideMenuContainerView = slideMenuContainer;

@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MenuViewController : UIViewController
+@interface SlideMenuViewController : UIViewController
 
 @property(nonatomic, strong) UIImageView *logoImage;
 @property(nonatomic, assign) NSInteger selectedIndex;

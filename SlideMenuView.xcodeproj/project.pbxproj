@@ -15,7 +15,7 @@
 		63A439F91AE4AED0006B984A /* SlideMenuViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A439F81AE4AED0006B984A /* SlideMenuViewTests.m */; };
 		63A43A041AE4AF94006B984A /* SlideMenuContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A43A031AE4AF94006B984A /* SlideMenuContainerView.m */; };
 		63CB67DD1AE7851900A5DE4E /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB67D71AE7851900A5DE4E /* FirstViewController.m */; };
-		63CB67DE1AE7851900A5DE4E /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB67D91AE7851900A5DE4E /* MenuViewController.m */; };
+		63CB67DE1AE7851900A5DE4E /* SlideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB67D91AE7851900A5DE4E /* SlideMenuViewController.m */; };
 		63CB67DF1AE7851900A5DE4E /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB67DB1AE7851900A5DE4E /* SecondViewController.m */; };
 		63CB67E01AE7851900A5DE4E /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB67DC1AE7851900A5DE4E /* ThirdViewController.m */; };
 		B6FFF4421B83CB96003166A5 /* FourthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FFF4411B83CB96003166A5 /* FourthViewController.m */; };
@@ -48,8 +48,8 @@
 		63A43A031AE4AF94006B984A /* SlideMenuContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SlideMenuContainerView.m; path = lib/SlideMenuContainerView.m; sourceTree = "<group>"; };
 		63CB67D61AE7851900A5DE4E /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
 		63CB67D71AE7851900A5DE4E /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		63CB67D81AE7851900A5DE4E /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
-		63CB67D91AE7851900A5DE4E /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		63CB67D81AE7851900A5DE4E /* SlideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideMenuViewController.h; sourceTree = "<group>"; };
+		63CB67D91AE7851900A5DE4E /* SlideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideMenuViewController.m; sourceTree = "<group>"; };
 		63CB67DA1AE7851900A5DE4E /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		63CB67DB1AE7851900A5DE4E /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		63CB67DC1AE7851900A5DE4E /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
@@ -158,8 +158,8 @@
 			children = (
 				63A43A021AE4AF94006B984A /* SlideMenuContainerView.h */,
 				63A43A031AE4AF94006B984A /* SlideMenuContainerView.m */,
-				63CB67D81AE7851900A5DE4E /* MenuViewController.h */,
-				63CB67D91AE7851900A5DE4E /* MenuViewController.m */,
+				63CB67D81AE7851900A5DE4E /* SlideMenuViewController.h */,
+				63CB67D91AE7851900A5DE4E /* SlideMenuViewController.m */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -275,7 +275,7 @@
 			files = (
 				B6FFF4451B83CB9E003166A5 /* FifthViewController.m in Sources */,
 				B6FFF4421B83CB96003166A5 /* FourthViewController.m in Sources */,
-				63CB67DE1AE7851900A5DE4E /* MenuViewController.m in Sources */,
+				63CB67DE1AE7851900A5DE4E /* SlideMenuViewController.m in Sources */,
 				63CB67E01AE7851900A5DE4E /* ThirdViewController.m in Sources */,
 				63A439E21AE4AED0006B984A /* AppDelegate.m in Sources */,
 				63CB67DF1AE7851900A5DE4E /* SecondViewController.m in Sources */,
