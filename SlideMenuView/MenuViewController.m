@@ -24,6 +24,7 @@ static NSInteger kBottomPadding = 20;
 @interface MenuViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property(strong,nonatomic) UITableView *tableview;
+@property(strong,nonatomic) UIView *footerView;
 @property(strong,nonatomic) UIButton *logoutButton;
 @property(strong,nonatomic) UIButton *settingButton;
 @property(nonatomic, strong) NSArray *titles;
@@ -34,10 +35,10 @@ static NSInteger kBottomPadding = 20;
 
 @implementation MenuViewController
 
-- (void)viewDidLoad_WITH_AUTO_LAYOUT_NOT_USED
+- (void)viewDidLoad_WITH_AUTO_LAYOUT
 {
     [super viewDidLoad];
-    self.titles = @[@"Messages", @"Channels", @"Teams", @"Users", @"Announcements"];
+    self.titles = @[@"Messages", @"Channels", @"Teams", @"Users", @"Announcements", @"Settings", @"Logout", @"Privacy", @"etc..."];
     
     // Setup view details
     self.view.backgroundColor = [UIColor clearColor];
@@ -52,16 +53,16 @@ static NSInteger kBottomPadding = 20;
     [self.view addSubview:self.logoImage];
     
     // Setup tableview
-    CGFloat tableViewWidth = self.view.bounds.size.width - (self.view.bounds.size.width / 6);
     self.tableview = [[UITableView alloc] initWithFrame:CGRectNull style:UITableViewStylePlain];
     self.tableview.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     self.tableview.backgroundColor = [UIColor clearColor];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.tableview selectRowAtIndexPath:[NSIndexPath indexPathForItem:self.selectedIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+    //[self.tableview selectRowAtIndexPath:[NSIndexPath indexPathForItem:self.selectedIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
     [self.view addSubview:self.tableview];
     
+    /*
     // Setup footer
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-kFooterHeight-kBottomPadding, tableViewWidth, kFooterHeight)];
     footerView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -75,45 +76,41 @@ static NSInteger kBottomPadding = 20;
     [self.logoutButton setAlpha: .6];
     self.logoutButton.backgroundColor = [UIColor clearColor];
     [self.logoutButton setTitle:@"Logout" forState:UIControlStateNormal];
-    [footerView addSubview: self.logoutButton];
+    //[footerView addSubview: self.logoutButton];
     
     // Setup settings button in footer
     // ... Not yet added...
-    
+    */
     
     // Constraint views
-    NSDictionary* views = NSDictionaryOfVariableBindings(_logoImage, _tableview, footerView, _logoutButton);
+    NSDictionary* views = NSDictionaryOfVariableBindings(_logoImage, _tableview);
     NSDictionary* metrics = @{
                               @"topPadding" : @(kTopPadding),
                               @"logoImageWidth" : @(kLogoViewWidth),
                               @"logoImageHeight" : @(kLogoViewHeight),
-                              @"tableViewWidth" : @(tableViewWidth),
+                              @"tableViewWidth" : @(self.view.bounds.size.width - (self.view.bounds.size.width / 6)),
                               @"footerViewWidth" : @(80),
                               @"footerViewHeight" : @(kFooterHeight),
                               @"bottomPadding" : @(kBottomPadding),
-                              
                               };
     
     // Horizontal constraints
-    [footerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_logoutButton]-|" options:0 metrics:metrics views:views]];
+    //[footerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_logoutButton(==footerViewWidth)]" options:0 metrics:metrics views:views]];
+    //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[footerView(==tableViewWidth)]" options:0 metrics:metrics views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_logoImage(==logoImageWidth)]" options:0 metrics:metrics views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_tableview(==tableViewWidth)]" options:0 metrics:metrics views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[footerView(==footerViewWidth)]" options:0 metrics:metrics views:views]];
     
     // Vertical constraints
-    [footerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[_logoutButton]-|" options:0 metrics:metrics views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topPadding-[_logoImage(==logoImageHeight)]-[_tableview]-[footerView(==footerViewHeight)]|" options:0 metrics:metrics views:views]];
+    //[footerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_logoutButton]|" options:0 metrics:metrics views:views]];
+    //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topPadding-[_logoImage(==logoImageHeight)][_tableview]-[footerView(==footerViewHeight)]|" options:0 metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[_logoImage(==logoImageHeight)][_tableview]|" options:0 metrics:metrics views:views]];
+    
 }
 
-- (void)viewDidLoad
+- (void)viewDidLoad //_WITHOUT_AUTO_LAYOUT
 {
     [super viewDidLoad];
-    self.titles = @[@"Messages", @"Channels", @"Teams", @"Users", @"Announcements"];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(orientationChanged:)
-                                                 name:UIDeviceOrientationDidChangeNotification
-                                               object:nil];
+    self.titles = @[@"Messages", @"Channels", @"Teams", @"Users", @"Announcements", @"Settings", @"Logout", @"Privacy", @"etc..."];
     
     // Setup view details
     self.view.backgroundColor = [UIColor clearColor];
@@ -138,24 +135,26 @@ static NSInteger kBottomPadding = 20;
     self.tableview.dataSource = self;
     self.tableview.backgroundColor = [UIColor clearColor];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.tableview selectRowAtIndexPath:[NSIndexPath indexPathForItem:self.selectedIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+    //[self.tableview selectRowAtIndexPath:[NSIndexPath indexPathForItem:self.selectedIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
     [self.view addSubview:self.tableview];
     
+    /*
     // Setup footer
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-kFooterHeight-kBottomPadding, tableViewWidth, kFooterHeight)];
-    //footerView.backgroundColor = [UIColor yellowColor];
-    [self.view addSubview:footerView];
+    self.footerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-kFooterHeight-kBottomPadding, self.view.frame.size.width, kFooterHeight)];
+    self.footerView.backgroundColor = [UIColor yellowColor];
+    [self.view addSubview:self.footerView];
     
     // Setup logout button in footer
     self.logoutButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, kFooterHeight)];
     [self.logoutButton setTitleColor:[UIColor whiteColor]forState:UIControlStateNormal];
     [self.logoutButton setAlpha: .6];
-    //self.logoutButton.backgroundColor = [UIColor redColor];
+    self.logoutButton.backgroundColor = [UIColor redColor];
     [self.logoutButton setTitle:@"Logout" forState:UIControlStateNormal];
-    [footerView addSubview: self.logoutButton];
+    [self.footerView addSubview: self.logoutButton];
     
     // Setup settings button in footer
-    
+    // ... Not yet added...
+    */
 }
 
 - (void)didReceiveMemoryWarning
@@ -163,21 +162,9 @@ static NSInteger kBottomPadding = 20;
     [super didReceiveMemoryWarning];
 }
 
-- (void)orientationChanged:(NSNotification *)notification
-{
-    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-    if (UIDeviceOrientationIsLandscape(deviceOrientation)) {
-        NSLog(@"MENU | LANDSCAPE: %@", NSStringFromCGRect(self.view.frame));
-        
-    } else if (UIDeviceOrientationIsPortrait(deviceOrientation)) {
-        NSLog(@"MENU | PORTRAIT: %@", NSStringFromCGRect(self.view.frame));
-        
-    }
-}
-
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:UIDeviceOrientationDidChangeNotification];
+    
 }
 
 
@@ -190,7 +177,7 @@ static NSInteger kBottomPadding = 20;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50.0f;
+    return 45.0f;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -199,14 +186,18 @@ static NSInteger kBottomPadding = 20;
     UITableViewCell *cell = [self.tableview  dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:CellIdentifier];
-        cell.textLabel.textColor = [UIColor whiteColor];
-        cell.textLabel.highlightedTextColor = [UIColor blackColor];
-        //cell.backgroundColor = [UIColor colorWithRed: 240.0 / 255.0 green:240.0 / 255.0 blue: 240.0 / 255.0 alpha: 0.08 * (indexPath.row + 1)];
+        
         cell.backgroundColor = [UIColor clearColor];
+        
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.textLabel.highlightedTextColor = [UIColor whiteColor];
         cell.textLabel.font = [UIFont systemFontOfSize:16];
-        cell.selectedBackgroundView = [[[UIView alloc] initWithFrame:cell.frame] init];
-        cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed: 240.0 / 255.0 green:240.0 / 255.0 blue: 240.0 / 255.0 alpha: 0.1 * (indexPath.row + 1)];
         cell.textLabel.text = [NSString stringWithFormat: @"%@", self.titles[indexPath.row]];
+        
+        cell.selectedBackgroundView = [[[UIView alloc] initWithFrame:cell.frame] init];
+        cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:0.2];
+        
+        //cell.imageView.image = [UIImage imageNamed:@"logo"]; // Use this for the icon.. resize it though
     }
     return cell;
 }
@@ -221,6 +212,9 @@ static NSInteger kBottomPadding = 20;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // Do not highlight row
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     switch (indexPath.row) {
         case 0:
             [self launchFirstView];

@@ -23,31 +23,19 @@
 
 - (id)initWithRootController:(UIViewController *)rootViewController
 {
-    self = [self init];
-    if (self) {
-        self.rootViewController = rootViewController;
-    }
-    [self installBackground];
-    return self;
-}
-
-- (id)init
-{
-    self.visibleWidthLeft = self.view.bounds.size.width / 6;
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         self.isAnimated = NO;
         self.showMenuOffset = YES;
+        
+        self.visibleWidthLeft = self.view.bounds.size.width / 6;
+        self.rootViewController = rootViewController;
+        
+        self.backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
+        self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+        self.backgroundImageView.frame = self.view.frame;
+        [self.view insertSubview:self.backgroundImageView atIndex:0];
     }
     return self;
-}
-
-- (void)installBackground
-{
-    self.backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
-    self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.backgroundImageView.frame = self.view.frame;
-    [self.view insertSubview:self.backgroundImageView atIndex:0];
 }
 
 - (void)viewDidLoad
@@ -55,24 +43,46 @@
     [super viewDidLoad];
 }
 
+- (void)viewDidLayoutSubviews
+{
+    NSLog(@"viewDidLayoutSubviews");
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
 
-- (void)addMenuItem
+- (void)setMenuViewController:(UIViewController *)menuViewController
 {
-    UIViewController *mainViewcontroller = nil;
-    if ([self.rootViewController isKindOfClass:[UINavigationController class]]) {
-        UINavigationController *nav = (UINavigationController *)self.rootViewController;
-        mainViewcontroller = nav.viewControllers.firstObject;
+    NSLog(@"setMenuViewController");
+    
+    _menuViewController = menuViewController;
+    
+    UIView *view = self.menuViewController.view;
+    view.frame = self.view.frame;
+    view.backgroundColor = [UIColor clearColor];
+    [self.view insertSubview:view atIndex:1];
+    
+    CGRect rect = self.menuViewController.view.frame;
+    if (self.showMenuOffset) {
+        rect.origin.x = -self.visibleWidthLeft;
+    } else {
+        rect.origin.x = 0;
     }
-    UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(slideOutAnimate)];
-    mainViewcontroller.navigationItem.leftBarButtonItem = barItem;
+    rect.origin.y = self.view.bounds.size.height / 4;
+    rect.size.height = self.view.bounds.size.height / 2;
+    rect.size.width = self.view.bounds.size.width / 2;
+    
+    self.menuViewController.view.transform = CGAffineTransformMakeScale(0.5, 0.5);
+    self.menuViewController.view.frame = rect;
+    self.menuViewController.view.alpha = 0;
 }
 
 - (void)setRootViewController:(UIViewController *)rootViewController
 {
+    NSLog(@"setRootViewController");
+    
     if (_rootViewController) {
         [_rootViewController.view removeFromSuperview];
         _rootViewController = nil;
@@ -111,28 +121,15 @@
     }
 }
 
-- (void)setMenuViewController:(UIViewController *)menuViewController
+- (void)addMenuItem
 {
-    _menuViewController = menuViewController;
-    
-    UIView *view = self.menuViewController.view;
-    view.frame = self.view.frame;
-    view.backgroundColor = [UIColor clearColor];
-    [self.view insertSubview:view atIndex:1];
-    
-    CGRect rect = self.menuViewController.view.frame;
-    if (self.showMenuOffset) {
-        rect.origin.x = -self.visibleWidthLeft;
-    } else {
-        rect.origin.x = 0;
+    UIViewController *mainViewcontroller = nil;
+    if ([self.rootViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nav = (UINavigationController *)self.rootViewController;
+        mainViewcontroller = nav.viewControllers.firstObject;
     }
-    rect.origin.y = self.view.bounds.size.height / 4;
-    rect.size.height = self.view.bounds.size.height / 2;
-    rect.size.width = self.view.bounds.size.width / 2;
-    
-    self.menuViewController.view.transform = CGAffineTransformMakeScale(0.5, 0.5);
-    self.menuViewController.view.frame = rect;
-    self.menuViewController.view.alpha = 0;
+    UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(slideOutAnimate)];
+    mainViewcontroller.navigationItem.leftBarButtonItem = barItem;
 }
 
 - (void)rootIsScrolling:(BOOL)isScroll
@@ -145,16 +142,31 @@
     }
 }
 
-
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    
-    
-    //NSLog(@"NEW SIZE: %@", NSStringFromCGSize(size));
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     return;
-//    NSLog(@"self.rootViewController.view.frame: %@", NSStringFromCGRect(self.rootViewController.view.frame));
+    
+    // Testing orientation changes below.....................................
+    
+    self.rootViewController.view.transform = CGAffineTransformMakeScale(1.0, 1.0);
+    
+    CGRect rect = self.rootViewController.view.frame;
+    rect.origin.x = size.width - self.visibleWidthLeft;
+    rect.origin.y = size.height / 4;
+    rect.size.height = size.height / 2;
+    rect.size.width = size.width / 2;
+    
+    NSLog(@"NEW SIZE: %@", NSStringFromCGSize(size));
+    
+    NSLog(@"self.rootViewController.view.frame: %@", NSStringFromCGRect(self.rootViewController.view.frame));
+    NSLog(@"new rect: %@", NSStringFromCGRect(rect));
+    
+    self.rootViewController.view.frame = rect;
+    self.rootViewController.view.transform = CGAffineTransformMakeScale(0.5, 0.5);
     
 
+    return;
     
     if (self.isAnimated) {
         NSLog(@"Need to redraw the slide menu and view controller...... isAnimated");
@@ -218,16 +230,15 @@
         
     }
     
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
 }
-
 
 
 #pragma mark - UIGesture Actions
 
 - (void)handleRightPan:(UIPanGestureRecognizer *)pan
 {
-    NSLog(@"handleRightPan");
+//    NSLog(@"handleRightPan");
     
     CGPoint locationPoint = [pan locationInView:self.view];
     CGFloat offsetX = locationPoint.x - self.startPoint.x;
@@ -353,7 +364,7 @@
 
 - (void)handleLeftPan:(UIPanGestureRecognizer *)leftSide
 {
-    NSLog(@"handleLeftPan");
+//    NSLog(@"handleLeftPan");
     
     CGPoint locationPoint = [leftSide locationInView:self.view];
     CGFloat offsetX = - (locationPoint.x - self.startPoint.x);
@@ -480,7 +491,7 @@
 
 - (void)handleTap:(UITapGestureRecognizer *)tap
 {
-    NSLog(@"handleTap");
+//    NSLog(@"handleTap");
     
     if (self.isAnimated) {
         [self slideOutAnimate];
@@ -489,7 +500,7 @@
 
 - (void)slideOutAnimate
 {
-    NSLog(@"slideOutAnimate");
+//    NSLog(@"slideOutAnimate");
     
     // Menu is not shown
     if (!self.isAnimated) {
@@ -519,7 +530,6 @@
                              self.menuViewController.view.transform = CGAffineTransformMakeScale(1, 1);
                              self.menuViewController.view.frame = nextRect;
                              self.menuViewController.view.alpha = 1.0;
-                             
                          }
                          completion:^(BOOL finished) {
                              self.isAnimated = !self.isAnimated;
